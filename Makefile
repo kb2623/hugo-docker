@@ -17,7 +17,7 @@ volume:
 volume_clean:
 	rm -rf ${VOLUME_DIR}
 
-build: volume
+build:
 	docker build \
 		--build-arg USER_ID=${USER_ID} \
 		--build-arg USER_NAME=${USER_NAME} \
@@ -26,7 +26,7 @@ build: volume
 		--build-arg GROUP_NAME=${GROUP_NAME} \
 		-t ${DOCKER_NAME}:${DOCKER_TAG} .
 
-run:
+run: volume
 	docker run --rm -it -p ${PORT}:1313 -v ${VOLUME_DIR}:/mnt/data --hostname=${DOCKER_NAME}-${DOCKER_TAG} ${DOCKER_NAME}:${DOCKER_TAG}
 
 clean: volume_clean
