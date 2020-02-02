@@ -17,7 +17,7 @@ volume:
 volume_clean:
 	rm -rf ${VOLUME_DIR}
 
-build:
+build: volume
 	docker build \
 		--build-arg USER_ID=${USER_ID} \
 		--build-arg USER_NAME=${USER_NAME} \
