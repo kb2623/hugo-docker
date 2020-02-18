@@ -16,6 +16,8 @@ RUN pacman --noconfirm -Syyu \
  && pacman -S --noconfirm bash zsh git vim neovim curl tmux vifm hugo openssl
 
 # Create group and user
+RUN -f /etc/skel/.bashrc
+ADD .bashrc /etc/skel
 RUN groupadd -g ${GROUP_ID} ${GROUP_NAME} \
  && useradd -m -d ${USER_HOME} -u ${USER_ID} -g ${GROUP_NAME} -s /bin/bash -p $(openssl passwd -6 -salt archlinux20200106 "${USER_PASSWORD}") -c 'Hugo user' ${USER_NAME}
 

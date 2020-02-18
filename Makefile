@@ -13,6 +13,7 @@ all: build run
 
 volume:
 	mkdir -p ${VOLUME_DIR}
+	chown -R ${USER_ID}:${GROUP_ID} ${VOLUME_DIR}
 
 volume_clean:
 	rm -rf ${VOLUME_DIR}
@@ -27,7 +28,8 @@ build:
 		-t ${DOCKER_NAME}:${DOCKER_TAG} .
 
 run: volume
-	docker run --rm -it -p ${PORT}:1313 -v ${VOLUME_DIR}:/mnt/data --hostname=${DOCKER_NAME}-${DOCKER_TAG} ${DOCKER_NAME}:${DOCKER_TAG}
+	docker run --rm -it -p ${PORT}:1313 -v ${VOLUME_DIR}:/mnt/data -w=/mnt/data --hostname=${DOCKER_NAME}-${DOCKER_TAG} ${DOCKER_NAME}:${DOCKER_TAG}
 
-clean: volume_clean
+clean: 
+	-make volume_clean
 	docker image rm ${DOCKER_NAME}:${DOCKER_TAG}
