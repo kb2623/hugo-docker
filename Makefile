@@ -3,13 +3,14 @@ DOCKER_TAG=archlinux
 VOLUME_DIR=/tmp/${DOCKER_NAME}-${DOCKER_TAG}
 PORT=1313
 
-USER_ID=1000
-USER_NAME=klemen
-USER_PASSWORD=klemen
-GROUP_ID=1000
-GROUP_NAME=klemen
+USER_ID:=1000
+USER_NAME:=klemen
+USER_PASSWORD:=klemen
+USER_EMAIL:=$USER_NAME@docker.me
+GROUP_ID:=1000
+GROUP_NAME:=klemen
 
-all: build run
+all: volume build run
 
 volume:
 	mkdir -p ${VOLUME_DIR}
@@ -25,6 +26,7 @@ build:
 		--build-arg USER_PASSWORD=${USER_PASSWORD} \
 		--build-arg GROUP_ID=${GROUP_ID} \
 		--build-arg GROUP_NAME=${GROUP_NAME} \
+		--build-arg USER_EMAIL=${USER_EMAIL} \
 		-t ${DOCKER_NAME}:${DOCKER_TAG} .
 
 run: volume
